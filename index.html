@@ -1,0 +1,1813 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>أكاديمية Alif-Lam-Meem - منصة التواصل</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        .container {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .auth-box {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 400px;
+            max-width: 90%;
+            padding: 40px;
+            margin: 0;
+        }
+
+        .chat-container {
+            background: white;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            border-radius: 0;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            color: #667eea;
+            font-size: 28px;
+            margin: 0 0 10px 0;
+        }
+
+        .logo p {
+            color: #666;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .switch-mode {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .switch-mode a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .switch-mode a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .success-message {
+            background: #efe;
+            color: #3c3;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Chat Styles */
+        .chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 25px;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .call-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .call-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .call-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .call-btn.active {
+            background: #ff4757;
+        }
+
+        .call-btn.muted {
+            background: #ff6b7a;
+        }
+
+        .chat-header-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .chat-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chat-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .chat-header-text h2 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .chat-header-text p {
+            margin: 5px 0 0 0;
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .chat-sidebar {
+            background: #f8f9fa;
+            border-left: 1px solid #e0e0e0;
+            padding: 20px;
+            overflow-y: auto;
+            height: 100%;
+        }
+
+        .chat-main {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .chat-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-list-item {
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .chat-list-item:hover {
+            background: #f0f0f0;
+        }
+
+        .chat-list-item.active {
+            border-color: #667eea;
+            background: #f0f0ff;
+        }
+
+        .chat-list-item h3 {
+            margin: 0 0 5px 0;
+            font-size: 15px;
+            color: #333;
+        }
+
+        .chat-list-item p {
+            margin: 0;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 15px;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.sent {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 15px;
+            word-wrap: break-word;
+        }
+
+        .message.received .message-content {
+            background: white;
+            color: #333;
+            border-bottom-right-radius: 15px;
+        }
+
+        .message.sent .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-bottom-left-radius: 15px;
+        }
+
+        .message-time {
+            font-size: 11px;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        .message-link {
+            color: inherit;
+            text-decoration: underline;
+            word-break: break-all;
+        }
+
+        .message.sent .message-link {
+            color: white;
+        }
+
+        .message-file {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 5px;
+        }
+
+        .message.sent .message-file {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .file-icon {
+            font-size: 24px;
+        }
+
+        .file-info {
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .file-size {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
+        .message-image {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        .chat-input-container {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 14px;
+            resize: none;
+            max-height: 100px;
+            font-family: inherit;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .input-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: #f0f0f0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        .icon-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: auto;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            color: #666;
+            margin: 0 0 10px 0;
+        }
+
+        .empty-state p {
+            color: #999;
+            margin: 0;
+        }
+
+        .image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .image-modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+        }
+
+        .image-modal-close {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Incoming Call Notification */
+        .incoming-call-notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            padding: 30px;
+            min-width: 300px;
+            animation: callPulse 2s infinite;
+        }
+
+        @keyframes callPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
+        }
+
+        .call-notification-content {
+            text-align: center;
+        }
+
+        .caller-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .caller-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .caller-details h3 {
+            margin: 0 0 5px 0;
+            color: #333;
+            font-size: 18px;
+        }
+
+        .caller-details p {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .call-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .accept-call-btn, .decline-call-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .accept-call-btn {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .accept-call-btn:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+
+        .decline-call-btn {
+            background: #f44336;
+            color: white;
+        }
+
+        .decline-call-btn:hover {
+            background: #da190b;
+            transform: scale(1.05);
+        }
+
+        .api-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 1000;
+        }
+
+        .api-status.online {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .api-status.offline {
+            background: #f44336;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .auth-box {
+                padding: 20px;
+                border-radius: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .chat-container {
+                height: 100%;
+                width: 100%;
+                border-radius: 0;
+            }
+
+            .chat-main {
+                flex-direction: column;
+            }
+
+            .chat-sidebar {
+                display: none;
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+
+            .call-controls {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+
+            .call-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+            }
+
+            .logout-btn {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            .chat-header {
+                padding: 15px 20px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .chat-header-info {
+                gap: 10px;
+            }
+
+            .chat-avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .chat-header-text h2 {
+                font-size: 16px;
+            }
+
+            .chat-header-text p {
+                font-size: 12px;
+            }
+
+            .incoming-call-notification {
+                min-width: 280px;
+                padding: 20px;
+            }
+        }
+    </style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body><!-- API Status Indicator -->
+  <div id="apiStatus" class="api-status offline">
+   🔴 غير متصل
+  </div>
+  <div class="container"><!-- Auth Screen -->
+   <div id="authScreen" class="auth-box">
+    <div class="logo">
+     <h1 id="academyNameDisplay">أكاديمية Alif-Lam-Meem</h1>
+     <p>منصة التواصل لتحفيظ القرآن الكريم</p>
+    </div>
+    <div id="errorMessage" class="error-message hidden"></div>
+    <div id="successMessage" class="success-message hidden"></div><!-- Login Form -->
+    <form id="loginForm">
+     <div class="form-group"><label for="loginEmail">البريد الإلكتروني</label> <input type="email" id="loginEmail" required placeholder="أدخل بريدك الإلكتروني">
+     </div>
+     <div class="form-group"><label for="loginPassword">كلمة المرور</label> <input type="password" id="loginPassword" required placeholder="أدخل كلمة المرور">
+     </div>
+     <div class="remember-me"><input type="checkbox" id="rememberMe" checked> <label for="rememberMe">تذكر بياناتي</label>
+     </div><button type="submit" class="btn" id="loginBtn">تسجيل الدخول</button>
+     <div class="switch-mode">
+      ليس لديك حساب؟ <a id="showRegister">إنشاء حساب جديد</a>
+     </div>
+    </form><!-- Register Form -->
+    <form id="registerForm" class="hidden">
+     <div class="form-group"><label for="registerName">الاسم الكامل</label> <input type="text" id="registerName" required placeholder="أدخل اسمك الكامل">
+     </div>
+     <div class="form-group"><label for="registerEmail">البريد الإلكتروني</label> <input type="email" id="registerEmail" required placeholder="أدخل بريدك الإلكتروني">
+     </div>
+     <div class="form-group"><label for="registerPassword">كلمة المرور</label> <input type="password" id="registerPassword" required placeholder="أدخل كلمة المرور">
+     </div><button type="submit" class="btn" id="registerBtn">إنشاء الحساب</button>
+     <div class="switch-mode">
+      لديك حساب بالفعل؟ <a id="showLogin">تسجيل الدخول</a>
+     </div>
+    </form>
+   </div><!-- Chat Screen -->
+   <div id="chatScreen" class="chat-container hidden">
+    <div class="chat-header">
+     <div class="chat-header-info">
+      <div class="chat-avatar" id="currentUserAvatar">
+       👤
+      </div>
+      <div class="chat-header-text">
+       <h2 id="currentUserName">المستخدم</h2>
+       <p id="currentUserEmail">user@example.com</p>
+      </div>
+     </div>
+     <div class="call-controls"><button class="call-btn hidden" id="micBtn" title="الميكروفون"> 🎤 </button> <button class="call-btn hidden" id="cameraBtn" title="الكاميرا"> 📹 </button> <button class="call-btn hidden" id="screenShareBtn" title="مشاركة الشاشة"> 🖥️ </button> <button class="call-btn" id="audioCallBtn" title="مكالمة صوتية"> 📞 </button> <button class="call-btn" id="videoCallBtn" title="مكالمة فيديو"> 📺 </button> <button class="logout-btn" id="logoutBtn">تسجيل الخروج</button>
+     </div>
+    </div>
+    <div class="chat-main">
+     <div class="chat-content">
+      <div id="messagesContainer" class="messages-container">
+       <div class="loading">
+        <div class="spinner"></div>
+        <p>جاري تحميل المحادثات...</p>
+       </div>
+      </div>
+      <div class="chat-input-container">
+       <div class="chat-input-wrapper"><textarea id="messageInput" class="chat-input" placeholder="اكتب رسالتك هنا..." rows="1"></textarea>
+        <div class="input-actions"><button type="button" class="icon-btn" id="attachImageBtn" title="إرفاق صورة"> 🖼️ </button> <button type="button" class="icon-btn" id="attachFileBtn" title="إرفاق ملف"> 📎 </button> <button type="button" class="icon-btn send-btn" id="sendBtn" title="إرسال"> ➤ </button>
+        </div>
+       </div><input type="file" id="imageInput" class="file-input" accept="image/*"> <input type="file" id="fileInput" class="file-input">
+      </div>
+     </div>
+     <div class="chat-sidebar" id="chatSidebar">
+      <h3 style="margin-top: 0; color: #333;">المحادثات</h3>
+      <div id="chatList"></div>
+     </div>
+    </div>
+   </div>
+  </div><!-- Image Modal -->
+  <div id="imageModal" class="image-modal hidden"><button class="image-modal-close" id="closeModal">✕</button> <img id="modalImage" src="" alt="معاينة الصورة">
+  </div>
+  <script>
+        const defaultConfig = {
+            academy_name: 'أكاديمية Alif-Lam-Meem',
+            teacher_name: 'أ. ساره عبدالطيف محمود بحيرى'
+        };
+
+        let config = { ...defaultConfig };
+
+        let currentUser = null;
+        let allUsers = [];
+        let currentChatUserId = null;
+
+        // Real API Storage Configuration
+        const API_CONFIG = {
+            binId: '690a2a5a43b1c97be9989174',
+            apiKey: '$2a$10$hJudGjs2DM9GszivDobyS.5YXXS8HRiPobc9XxhYDUM5dtZQ81dE2',
+            baseUrl: 'https://api.jsonbin.io/v3/b'
+        };
+
+        // Default data structure
+        const defaultData = {
+            users: [
+                {
+                    id: '1',
+                    name: 'أ. ساره عبدالطيف محمود بحيرى',
+                    email: 'teacher@alif-lam-meem.com',
+                    password: '123456',
+                    avatar: null,
+                    isTeacher: true,
+                    createdAt: Date.now()
+                }
+            ],
+            chats: {},
+            lastUpdated: Date.now()
+        };
+
+        // API Status Management
+        function updateApiStatus(isOnline) {
+            const statusElement = document.getElementById('apiStatus');
+            if (isOnline) {
+                statusElement.className = 'api-status online';
+                statusElement.textContent = '🟢 متصل بالخادم';
+            } else {
+                statusElement.className = 'api-status offline';
+                statusElement.textContent = '🔴 غير متصل';
+            }
+        }
+
+        // Load data from real API
+        async function loadData() {
+            try {
+                updateApiStatus(false);
+                
+                const response = await fetch(`${API_CONFIG.baseUrl}/${API_CONFIG.binId}/latest`, {
+                    method: 'GET',
+                    headers: {
+                        'X-Master-Key': API_CONFIG.apiKey,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    updateApiStatus(true);
+                    console.log('✅ تم تحميل البيانات من الخادم بنجاح');
+                    return result.record || defaultData;
+                } else {
+                    console.log('⚠️ فشل تحميل البيانات، استخدام البيانات الافتراضية');
+                    updateApiStatus(false);
+                    return defaultData;
+                }
+            } catch (error) {
+                console.log('❌ خطأ في الاتصال بالخادم:', error.message);
+                updateApiStatus(false);
+                return defaultData;
+            }
+        }
+
+        // Save data to real API
+        async function saveData(data) {
+            try {
+                data.lastUpdated = Date.now();
+                
+                const response = await fetch(`${API_CONFIG.baseUrl}/${API_CONFIG.binId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'X-Master-Key': API_CONFIG.apiKey,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    updateApiStatus(true);
+                    console.log('✅ تم حفظ البيانات في الخادم بنجاح');
+                    return true;
+                } else {
+                    console.error('❌ فشل حفظ البيانات في الخادم');
+                    updateApiStatus(false);
+                    return false;
+                }
+            } catch (error) {
+                console.error('❌ خطأ في حفظ البيانات:', error.message);
+                updateApiStatus(false);
+                return false;
+            }
+        }
+
+        // Initialize data on first load
+        async function initializeData() {
+            try {
+                console.log('🔄 جاري تهيئة البيانات...');
+                const data = await loadData();
+                
+                if (!data.users || data.users.length === 0) {
+                    console.log('📝 إنشاء البيانات الافتراضية...');
+                    await saveData(defaultData);
+                    return defaultData;
+                }
+                
+                console.log('✅ تم تحميل البيانات بنجاح');
+                return data;
+            } catch (error) {
+                console.error('❌ خطأ في تهيئة البيانات:', error);
+                return defaultData;
+            }
+        }
+
+        // DOM Elements
+        const authScreen = document.getElementById('authScreen');
+        const chatScreen = document.getElementById('chatScreen');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const showRegisterLink = document.getElementById('showRegister');
+        const showLoginLink = document.getElementById('showLogin');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const messagesContainer = document.getElementById('messagesContainer');
+        const chatList = document.getElementById('chatList');
+        const attachImageBtn = document.getElementById('attachImageBtn');
+        const attachFileBtn = document.getElementById('attachFileBtn');
+        const imageInput = document.getElementById('imageInput');
+        const fileInput = document.getElementById('fileInput');
+        const imageModal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const closeModal = document.getElementById('closeModal');
+        const currentUserAvatar = document.getElementById('currentUserAvatar');
+        const academyNameDisplay = document.getElementById('academyNameDisplay');
+
+        // Initialize Element SDK
+        async function onConfigChange(newConfig) {
+            config = { ...defaultConfig, ...newConfig };
+            academyNameDisplay.textContent = config.academy_name || defaultConfig.academy_name;
+        }
+
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities: (config) => ({
+                    recolorables: [],
+                    borderables: [],
+                    fontEditable: undefined,
+                    fontSizeable: undefined
+                }),
+                mapToEditPanelValues: (config) => new Map([
+                    ['academy_name', config.academy_name || defaultConfig.academy_name],
+                    ['teacher_name', config.teacher_name || defaultConfig.teacher_name]
+                ])
+            });
+        }
+
+        // Call Controls Variables
+        let micEnabled = true;
+        let cameraEnabled = true;
+        let screenSharing = false;
+        let audioCallActive = false;
+        let videoCallActive = false;
+        let incomingCallActive = false;
+        let callRingInterval = null;
+
+        // Create realistic ringtone
+        function createRingtone() {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                oscillator.frequency.setValueAtTime(1000, audioContext.currentTime + 0.1);
+                oscillator.frequency.setValueAtTime(800, audioContext.currentTime + 0.2);
+                
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.8);
+                
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 0.8);
+            } catch (error) {
+                console.log('Audio not supported');
+            }
+        }
+
+        function startRinging() {
+            createRingtone();
+            callRingInterval = setInterval(() => {
+                createRingtone();
+            }, 2000);
+        }
+
+        function stopRinging() {
+            if (callRingInterval) {
+                clearInterval(callRingInterval);
+                callRingInterval = null;
+            }
+        }
+
+        function showCallInterface() {
+            document.getElementById('micBtn').classList.remove('hidden');
+            document.getElementById('cameraBtn').classList.remove('hidden');
+            
+            // Show screen share only for teacher Sarah
+            if (currentUser && currentUser.email === 'teacher@alif-lam-meem.com') {
+                document.getElementById('screenShareBtn').classList.remove('hidden');
+            }
+        }
+
+        function hideCallInterface() {
+            document.getElementById('micBtn').classList.add('hidden');
+            document.getElementById('cameraBtn').classList.add('hidden');
+            document.getElementById('screenShareBtn').classList.add('hidden');
+        }
+
+        function simulateIncomingCall() {
+            if (incomingCallActive) return;
+            
+            incomingCallActive = true;
+            startRinging();
+            
+            const otherUser = allUsers.find(u => u.id !== currentUser.id) || { name: 'مستخدم آخر' };
+            
+            const callNotification = document.createElement('div');
+            callNotification.className = 'incoming-call-notification';
+            callNotification.innerHTML = `
+                <div class="call-notification-content">
+                    <div class="caller-info">
+                        <div class="caller-avatar">${getInitials(otherUser.name)}</div>
+                        <div class="caller-details">
+                            <h3>مكالمة واردة</h3>
+                            <p>${otherUser.name}</p>
+                        </div>
+                    </div>
+                    <div class="call-actions">
+                        <button class="accept-call-btn" onclick="acceptCall()">قبول</button>
+                        <button class="decline-call-btn" onclick="declineCall()">رفض</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(callNotification);
+        }
+
+        window.acceptCall = function() {
+            stopRinging();
+            incomingCallActive = false;
+            audioCallActive = true;
+            
+            document.querySelector('.incoming-call-notification')?.remove();
+            document.getElementById('audioCallBtn').classList.add('active');
+            document.getElementById('audioCallBtn').textContent = '📵';
+            document.getElementById('audioCallBtn').title = 'إنهاء المكالمة الصوتية';
+            
+            showCallInterface();
+        };
+
+        window.declineCall = function() {
+            stopRinging();
+            incomingCallActive = false;
+            document.querySelector('.incoming-call-notification')?.remove();
+        };
+
+        // Utility Functions
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.remove('hidden');
+            successMessage.classList.add('hidden');
+            setTimeout(() => {
+                errorMessage.classList.add('hidden');
+            }, 5000);
+        }
+
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.classList.remove('hidden');
+            errorMessage.classList.add('hidden');
+            setTimeout(() => {
+                successMessage.classList.add('hidden');
+            }, 3000);
+        }
+
+        function getInitials(name) {
+            const words = name.trim().split(' ');
+            if (words.length === 1) {
+                return words[0].charAt(0).toUpperCase();
+            }
+            const firstLetter = words[0].charAt(0).toUpperCase();
+            const lastLetter = words[words.length - 1].charAt(0).toUpperCase();
+            return firstLetter + ' ' + lastLetter;
+        }
+
+        function saveLoginData(email, password, remember) {
+            if (remember) {
+                localStorage.setItem('rememberedEmail', email);
+                localStorage.setItem('rememberedPassword', password);
+                localStorage.setItem('rememberLogin', 'true');
+            } else {
+                localStorage.removeItem('rememberedEmail');
+                localStorage.removeItem('rememberedPassword');
+                localStorage.removeItem('rememberLogin');
+            }
+        }
+
+        function loadSavedLoginData() {
+            const remember = localStorage.getItem('rememberLogin') === 'true';
+            if (remember) {
+                const email = localStorage.getItem('rememberedEmail');
+                const password = localStorage.getItem('rememberedPassword');
+                if (email && password) {
+                    document.getElementById('loginEmail').value = email;
+                    document.getElementById('loginPassword').value = password;
+                    document.getElementById('rememberMe').checked = true;
+                }
+            }
+        }
+
+        function formatTime(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' بايت';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' كيلوبايت';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' ميجابايت';
+        }
+
+        // Auth Functions
+        showRegisterLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginForm.classList.add('hidden');
+            registerForm.classList.remove('hidden');
+            errorMessage.classList.add('hidden');
+            successMessage.classList.add('hidden');
+        });
+
+        showLoginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            registerForm.classList.add('hidden');
+            loginForm.classList.remove('hidden');
+            errorMessage.classList.add('hidden');
+            successMessage.classList.add('hidden');
+        });
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const remember = document.getElementById('rememberMe').checked;
+
+            const loginBtn = document.getElementById('loginBtn');
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'جاري تسجيل الدخول...';
+
+            try {
+                const data = await loadData();
+                const user = data.users.find(u => u.email === email && u.password === password);
+
+                if (user) {
+                    currentUser = user;
+                    allUsers = data.users;
+                    saveLoginData(email, password, remember);
+                    showChatScreen();
+                    await loadChats();
+                } else {
+                    showError('البريد الإلكتروني أو كلمة المرور غير صحيحة');
+                }
+            } catch (error) {
+                showError('خطأ في الاتصال بالخادم');
+            }
+
+            loginBtn.disabled = false;
+            loginBtn.textContent = 'تسجيل الدخول';
+        });
+
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+
+            const registerBtn = document.getElementById('registerBtn');
+            registerBtn.disabled = true;
+            registerBtn.textContent = 'جاري إنشاء الحساب...';
+
+            try {
+                const data = await loadData();
+
+                if (data.users.find(u => u.email === email)) {
+                    showError('البريد الإلكتروني مستخدم بالفعل');
+                    registerBtn.disabled = false;
+                    registerBtn.textContent = 'إنشاء الحساب';
+                    return;
+                }
+
+                const newUser = {
+                    id: Date.now().toString(),
+                    name,
+                    email,
+                    password,
+                    avatar: null,
+                    isTeacher: false,
+                    createdAt: Date.now()
+                };
+
+                data.users.push(newUser);
+
+                const saved = await saveData(data);
+
+                if (saved) {
+                    showSuccess('تم إنشاء الحساب بنجاح! يمكنك الآن تسجيل الدخول');
+                    registerForm.reset();
+                    setTimeout(() => {
+                        registerForm.classList.add('hidden');
+                        loginForm.classList.remove('hidden');
+                    }, 2000);
+                } else {
+                    showError('حدث خطأ أثناء إنشاء الحساب');
+                }
+            } catch (error) {
+                showError('خطأ في الاتصال بالخادم');
+            }
+
+            registerBtn.disabled = false;
+            registerBtn.textContent = 'إنشاء الحساب';
+        });
+
+        function showChatScreen() {
+            authScreen.classList.add('hidden');
+            chatScreen.classList.remove('hidden');
+
+            document.getElementById('currentUserName').textContent = currentUser.name;
+            document.getElementById('currentUserEmail').textContent = currentUser.email;
+
+            if (currentUser.avatar) {
+                currentUserAvatar.innerHTML = `<img src="${currentUser.avatar}" alt="صورة المستخدم">`;
+            } else {
+                currentUserAvatar.textContent = getInitials(currentUser.name);
+            }
+
+            hideCallInterface();
+
+            // Show loading state while loading chats
+            messagesContainer.innerHTML = '<div class="loading"><div class="spinner"></div><p>جاري تحميل البيانات من الخادم...</p></div>';
+
+            // Simulate incoming call after 8 seconds for demo
+            setTimeout(() => {
+                if (Math.random() > 0.6) {
+                    simulateIncomingCall();
+                }
+            }, 8000);
+        }
+
+        logoutBtn.addEventListener('click', () => {
+            currentUser = null;
+            currentChatUserId = null;
+            chatScreen.classList.add('hidden');
+            authScreen.classList.remove('hidden');
+            loginForm.reset();
+            registerForm.reset();
+            messagesContainer.innerHTML = '';
+            chatList.innerHTML = '';
+            
+            // Reset call states
+            audioCallActive = false;
+            videoCallActive = false;
+            stopRinging();
+            hideCallInterface();
+        });
+
+        // Avatar Upload
+        currentUserAvatar.addEventListener('click', () => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = async (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = async (event) => {
+                        try {
+                            const data = await loadData();
+                            const userIndex = data.users.findIndex(u => u.id === currentUser.id);
+                            if (userIndex !== -1) {
+                                data.users[userIndex].avatar = event.target.result;
+                                currentUser.avatar = event.target.result;
+                                const saved = await saveData(data);
+                                if (saved) {
+                                    currentUserAvatar.innerHTML = `<img src="${event.target.result}" alt="صورة المستخدم">`;
+                                    showSuccess('تم تحديث الصورة الشخصية');
+                                } else {
+                                    showError('فشل تحديث الصورة الشخصية');
+                                }
+                            }
+                        } catch (error) {
+                            showError('خطأ في تحديث الصورة الشخصية');
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+            input.click();
+        });
+
+        // Chat Functions
+        async function loadChats() {
+            try {
+                const data = await initializeData();
+                allUsers = data.users;
+
+                const teacherUser = data.users.find(u => u.email === 'teacher@alif-lam-meem.com');
+
+                if (currentUser.isTeacher) {
+                    const students = data.users.filter(u => !u.isTeacher);
+                    renderChatList(students);
+
+                    if (students.length > 0) {
+                        selectChat(students[0].id);
+                    } else {
+                        showEmptyState();
+                    }
+                } else {
+                    if (teacherUser) {
+                        renderChatList([teacherUser]);
+                        selectChat(teacherUser.id);
+                    } else {
+                        showEmptyState();
+                    }
+                }
+            } catch (error) {
+                showError('خطأ في تحميل المحادثات');
+                showEmptyState();
+            }
+        }
+
+        function getChatKey(userId1, userId2) {
+            const ids = [userId1, userId2].sort();
+            return `${ids[0]}_${ids[1]}`;
+        }
+
+        function renderChatList(users) {
+            chatList.innerHTML = '';
+            users.forEach(user => {
+                const div = document.createElement('div');
+                div.className = 'chat-list-item';
+                div.innerHTML = `
+                    <h3>${user.name}</h3>
+                    <p>${user.email}</p>
+                `;
+                div.addEventListener('click', () => selectChat(user.id));
+                chatList.appendChild(div);
+            });
+        }
+
+        async function selectChat(userId) {
+            currentChatUserId = userId;
+
+            const items = chatList.querySelectorAll('.chat-list-item');
+            items.forEach((item, index) => {
+                item.classList.remove('active');
+                if (allUsers.filter(u => currentUser.isTeacher ? !u.isTeacher : u.isTeacher)[index]?.id === userId) {
+                    item.classList.add('active');
+                }
+            });
+
+            await loadMessages();
+        }
+
+        async function loadMessages() {
+            messagesContainer.innerHTML = '<div class="loading"><div class="spinner"></div><p>جاري تحميل الرسائل...</p></div>';
+
+            try {
+                const data = await loadData();
+                const chatKey = getChatKey(currentUser.id, currentChatUserId);
+                const messages = data.chats?.[chatKey] || [];
+
+                messagesContainer.innerHTML = '';
+
+                if (messages.length === 0) {
+                    messagesContainer.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">💬</div>
+                            <h3>لا توجد رسائل بعد</h3>
+                            <p>ابدأ المحادثة بإرسال رسالة</p>
+                        </div>
+                    `;
+                } else {
+                    messages.forEach(msg => {
+                        renderMessage(msg);
+                    });
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }
+            } catch (error) {
+                messagesContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">❌</div>
+                        <h3>خطأ في تحميل الرسائل</h3>
+                        <p>تحقق من الاتصال بالإنترنت</p>
+                    </div>
+                `;
+            }
+        }
+
+        function renderMessage(message) {
+            const div = document.createElement('div');
+            div.className = `message ${message.senderId === currentUser.id ? 'sent' : 'received'}`;
+
+            let content = message.text;
+
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            content = content.replace(urlRegex, (url) => {
+                return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="message-link">${url}</a>`;
+            });
+
+            let fileHtml = '';
+            if (message.file) {
+                if (message.file.type === 'image') {
+                    fileHtml = `<img src="${message.file.data}" alt="صورة" class="message-image" onclick="openImageModal('${message.file.data}')">`;
+                } else {
+                    fileHtml = `
+                        <div class="message-file">
+                            <div class="file-icon">📄</div>
+                            <div class="file-info">
+                                <div class="file-name">${message.file.name}</div>
+                                <div class="file-size">${message.file.size}</div>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            div.innerHTML = `
+                <div class="message-content">
+                    <div>${content}</div>
+                    ${fileHtml}
+                    <div class="message-time">${formatTime(message.timestamp)}</div>
+                </div>
+            `;
+
+            messagesContainer.appendChild(div);
+        }
+
+        function showEmptyState() {
+            messagesContainer.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon">📭</div>
+                    <h3>لا توجد محادثات</h3>
+                    <p>${currentUser.isTeacher ? 'لا يوجد طلاب بعد' : 'لم تبدأ أي محادثة مع المعلمة بعد'}</p>
+                </div>
+            `;
+            chatList.innerHTML = '';
+        }
+
+        // Send Message
+        async function sendMessage() {
+            const text = messageInput.value.trim();
+            if (!text || !currentChatUserId) return;
+
+            sendBtn.disabled = true;
+            sendBtn.textContent = '⏳';
+
+            const message = {
+                id: Date.now().toString(),
+                senderId: currentUser.id,
+                text,
+                timestamp: Date.now(),
+                file: null
+            };
+
+            try {
+                const data = await loadData();
+                const chatKey = getChatKey(currentUser.id, currentChatUserId);
+
+                if (!data.chats) data.chats = {};
+                if (!data.chats[chatKey]) data.chats[chatKey] = [];
+
+                data.chats[chatKey].push(message);
+
+                const saved = await saveData(data);
+
+                if (saved) {
+                    renderMessage(message);
+                    messageInput.value = '';
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                } else {
+                    showError('فشل إرسال الرسالة - تحقق من الاتصال');
+                }
+            } catch (error) {
+                showError('خطأ في إرسال الرسالة');
+            }
+
+            sendBtn.disabled = false;
+            sendBtn.textContent = '➤';
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // File Attachments
+        attachImageBtn.addEventListener('click', () => {
+            imageInput.click();
+        });
+
+        attachFileBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        imageInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file || !currentChatUserId) return;
+
+            const reader = new FileReader();
+            reader.onload = async (event) => {
+                const message = {
+                    id: Date.now().toString(),
+                    senderId: currentUser.id,
+                    text: '',
+                    timestamp: Date.now(),
+                    file: {
+                        type: 'image',
+                        data: event.target.result,
+                        name: file.name,
+                        size: formatFileSize(file.size)
+                    }
+                };
+
+                try {
+                    const data = await loadData();
+                    const chatKey = getChatKey(currentUser.id, currentChatUserId);
+
+                    if (!data.chats) data.chats = {};
+                    if (!data.chats[chatKey]) data.chats[chatKey] = [];
+
+                    data.chats[chatKey].push(message);
+
+                    const saved = await saveData(data);
+
+                    if (saved) {
+                        renderMessage(message);
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                        showSuccess('تم إرسال الصورة');
+                    } else {
+                        showError('فشل إرسال الصورة');
+                    }
+                } catch (error) {
+                    showError('خطأ في إرسال الصورة');
+                }
+            };
+            reader.readAsDataURL(file);
+            imageInput.value = '';
+        });
+
+        fileInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file || !currentChatUserId) return;
+
+            const reader = new FileReader();
+            reader.onload = async (event) => {
+                const message = {
+                    id: Date.now().toString(),
+                    senderId: currentUser.id,
+                    text: '',
+                    timestamp: Date.now(),
+                    file: {
+                        type: 'file',
+                        data: event.target.result,
+                        name: file.name,
+                        size: formatFileSize(file.size)
+                    }
+                };
+
+                try {
+                    const data = await loadData();
+                    const chatKey = getChatKey(currentUser.id, currentChatUserId);
+
+                    if (!data.chats) data.chats = {};
+                    if (!data.chats[chatKey]) data.chats[chatKey] = [];
+
+                    data.chats[chatKey].push(message);
+
+                    const saved = await saveData(data);
+
+                    if (saved) {
+                        renderMessage(message);
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                        showSuccess('تم إرسال الملف');
+                    } else {
+                        showError('فشل إرسال الملف');
+                    }
+                } catch (error) {
+                    showError('خطأ في إرسال الملف');
+                }
+            };
+            reader.readAsDataURL(file);
+            fileInput.value = '';
+        });
+
+        // Image Modal
+        window.openImageModal = function(src) {
+            modalImage.src = src;
+            imageModal.classList.remove('hidden');
+        };
+
+        closeModal.addEventListener('click', () => {
+            imageModal.classList.add('hidden');
+        });
+
+        imageModal.addEventListener('click', (e) => {
+            if (e.target === imageModal) {
+                imageModal.classList.add('hidden');
+            }
+        });
+
+        // Call Controls Event Listeners
+        document.getElementById('micBtn').addEventListener('click', function() {
+            micEnabled = !micEnabled;
+            this.classList.toggle('muted', !micEnabled);
+            this.textContent = micEnabled ? '🎤' : '🔇';
+            this.title = micEnabled ? 'الميكروفون' : 'الميكروفون مغلق';
+        });
+
+        document.getElementById('cameraBtn').addEventListener('click', function() {
+            cameraEnabled = !cameraEnabled;
+            this.classList.toggle('muted', !cameraEnabled);
+            this.textContent = cameraEnabled ? '📹' : '📷';
+            this.title = cameraEnabled ? 'الكاميرا' : 'الكاميرا مغلقة';
+        });
+
+        document.getElementById('screenShareBtn').addEventListener('click', function() {
+            screenSharing = !screenSharing;
+            this.classList.toggle('active', screenSharing);
+            this.textContent = screenSharing ? '🛑' : '🖥️';
+            this.title = screenSharing ? 'إيقاف مشاركة الشاشة' : 'مشاركة الشاشة';
+        });
+
+        document.getElementById('audioCallBtn').addEventListener('click', function() {
+            if (!audioCallActive) {
+                this.disabled = true;
+                this.textContent = '📞';
+                this.title = 'جاري الاتصال...';
+                
+                startRinging();
+                
+                setTimeout(() => {
+                    stopRinging();
+                    audioCallActive = true;
+                    this.classList.add('active');
+                    this.textContent = '📵';
+                    this.title = 'إنهاء المكالمة الصوتية';
+                    this.disabled = false;
+                    showCallInterface();
+                }, 3000);
+            } else {
+                audioCallActive = false;
+                this.classList.remove('active');
+                this.textContent = '📞';
+                this.title = 'مكالمة صوتية';
+                hideCallInterface();
+                
+                micEnabled = true;
+                cameraEnabled = true;
+                screenSharing = false;
+                document.getElementById('micBtn').classList.remove('muted');
+                document.getElementById('cameraBtn').classList.remove('muted');
+                document.getElementById('screenShareBtn').classList.remove('active');
+                document.getElementById('micBtn').textContent = '🎤';
+                document.getElementById('cameraBtn').textContent = '📹';
+                document.getElementById('screenShareBtn').textContent = '🖥️';
+            }
+            
+            if (audioCallActive && videoCallActive) {
+                document.getElementById('videoCallBtn').click();
+            }
+        });
+
+        document.getElementById('videoCallBtn').addEventListener('click', function() {
+            if (!videoCallActive) {
+                this.disabled = true;
+                this.textContent = '📺';
+                this.title = 'جاري الاتصال...';
+                
+                startRinging();
+                
+                setTimeout(() => {
+                    stopRinging();
+                    videoCallActive = true;
+                    this.classList.add('active');
+                    this.textContent = '📴';
+                    this.title = 'إنهاء مكالمة الفيديو';
+                    this.disabled = false;
+                    showCallInterface();
+                }, 3000);
+            } else {
+                videoCallActive = false;
+                this.classList.remove('active');
+                this.textContent = '📺';
+                this.title = 'مكالمة فيديو';
+                hideCallInterface();
+                
+                micEnabled = true;
+                cameraEnabled = true;
+                screenSharing = false;
+                document.getElementById('micBtn').classList.remove('muted');
+                document.getElementById('cameraBtn').classList.remove('muted');
+                document.getElementById('screenShareBtn').classList.remove('active');
+                document.getElementById('micBtn').textContent = '🎤';
+                document.getElementById('cameraBtn').textContent = '📹';
+                document.getElementById('screenShareBtn').textContent = '🖥️';
+            }
+            
+            if (videoCallActive && audioCallActive) {
+                document.getElementById('audioCallBtn').click();
+            }
+        });
+
+        // Auto-resize textarea
+        messageInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+        });
+
+        // Initialize app
+        window.addEventListener('load', async () => {
+            loadSavedLoginData();
+            
+            // Test API connection on load
+            console.log('🚀 بدء تشغيل المنصة...');
+            try {
+                await loadData();
+                console.log('✅ تم الاتصال بالخادم بنجاح');
+            } catch (error) {
+                console.log('⚠️ تعذر الاتصال بالخادم، سيتم العمل في وضع عدم الاتصال');
+            }
+        });
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9995b87ee411e18d',t:'MTc2MjI3NjE4My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
