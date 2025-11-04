@@ -3,7 +3,6 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/x-icon" href="logo.png">
   <title>منصة التواصل التعليمية</title>
   <script src="/_sdk/element_sdk.js"></script>
   <script src="/_sdk/data_sdk.js"></script>
@@ -892,47 +891,25 @@
         }
 
         .connection-status {
-            position: fixed;
-            top: 16px;
-            right: 16px;
-            padding: 8px 12px;
-            border-radius: 16px;
-            font-size: 12px;
-            font-weight: 600;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            display: none;
         }
 
-        .connection-status.online {
-            background: #dff6dd;
-            color: #107c10;
-            border: 1px solid #9fd89f;
-        }
-
-        .connection-status.offline {
-            background: #fde7e9;
-            color: #a4262c;
-            border: 1px solid #f1aeb5;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: currentColor;
-        }
-
-        @media (max-width: 768px) {
+        /* Responsive Design for All Devices */
+        @media (max-width: 480px) {
+            /* Mobile phones */
             .auth-box {
-                padding: 24px;
+                padding: 20px;
                 border-radius: 0;
                 width: 100%;
                 height: 100%;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
+                margin: 0;
+            }
+
+            .logo h1 {
+                font-size: 24px;
             }
 
             .chat-container {
@@ -950,62 +927,203 @@
             }
 
             .message-bubble {
-                max-width: 85%;
+                max-width: 90%;
+                font-size: 14px;
             }
 
             .chat-header {
-                padding: 12px 16px;
+                padding: 10px 12px;
                 flex-wrap: wrap;
-                gap: 8px;
+                gap: 6px;
             }
 
             .chat-header-left {
-                gap: 12px;
+                gap: 10px;
             }
 
             .chat-header-right {
-                gap: 8px;
+                gap: 6px;
             }
 
             .chat-avatar {
-                width: 36px;
-                height: 36px;
-                font-size: 14px;
+                width: 32px;
+                height: 32px;
+                font-size: 12px;
             }
 
             .chat-header-info h2 {
-                font-size: 14px;
+                font-size: 13px;
             }
 
             .chat-header-info p {
+                font-size: 10px;
+            }
+
+            .header-btn {
+                padding: 6px 8px;
                 font-size: 11px;
             }
 
+            .call-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+            }
+
+            .chat-input-container {
+                padding: 12px;
+            }
+
+            .icon-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 14px;
+            }
+
             .incoming-call-notification {
-                min-width: 280px;
-                padding: 24px;
+                min-width: 260px;
+                padding: 20px;
+                margin: 0 16px;
             }
 
             .caller-avatar {
-                width: 64px;
-                height: 64px;
-                font-size: 24px;
+                width: 60px;
+                height: 60px;
+                font-size: 20px;
+            }
+
+            .accept-call-btn, .decline-call-btn {
+                width: 48px;
+                height: 48px;
+                font-size: 20px;
             }
 
             .self-video {
-                width: 120px;
-                height: 90px;
-                top: 16px;
-                right: 16px;
+                width: 100px;
+                height: 75px;
+                top: 12px;
+                right: 12px;
+            }
+
+            .video-call-controls {
+                padding: 16px;
+                gap: 12px;
+            }
+
+            .video-call-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+        }
+
+        @media (min-width: 481px) and (max-width: 768px) {
+            /* Tablets */
+            .auth-box {
+                padding: 32px;
+                border-radius: 8px;
+                width: 90%;
+                max-width: 500px;
+            }
+
+            .chat-main {
+                flex-direction: row;
+            }
+
+            .chat-sidebar {
+                width: 240px;
+            }
+
+            .message-bubble {
+                max-width: 80%;
+            }
+
+            .chat-header {
+                padding: 14px 20px;
+            }
+
+            .chat-avatar {
+                width: 38px;
+                height: 38px;
+                font-size: 15px;
+            }
+
+            .incoming-call-notification {
+                min-width: 320px;
+                padding: 28px;
+            }
+
+            .caller-avatar {
+                width: 70px;
+                height: 70px;
+                font-size: 28px;
+            }
+
+            .self-video {
+                width: 140px;
+                height: 105px;
+                top: 20px;
+                right: 20px;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            /* Large tablets and small laptops */
+            .auth-box {
+                padding: 40px;
+                width: 450px;
+            }
+
+            .chat-sidebar {
+                width: 300px;
+            }
+
+            .message-bubble {
+                max-width: 75%;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            /* Desktop and large screens */
+            .auth-box {
+                width: 420px;
+                padding: 40px;
+            }
+
+            .chat-sidebar {
+                width: 280px;
+            }
+
+            .message-bubble {
+                max-width: 70%;
+            }
+        }
+
+        /* iOS Safari specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            .container {
+                height: 100vh;
+                height: -webkit-fill-available;
+            }
+
+            .chat-container {
+                height: 100vh;
+                height: -webkit-fill-available;
+            }
+        }
+
+        /* Android Chrome specific fixes */
+        @media screen and (max-width: 768px) {
+            .container {
+                min-height: 100vh;
+                min-height: -webkit-fill-available;
             }
         }
     </style>
- <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
  </head>
- <body><!-- Connection Status -->
-  <div id="connectionStatus" class="connection-status offline">
-   <div class="status-dot"></div><span>غير متصل</span>
-  </div>
+ <body>
   <div class="container"><!-- Auth Screen -->
    <div id="authScreen" class="auth-box">
     <div class="logo">
@@ -1380,17 +1498,70 @@
             });
         }
 
-        // Connection Status
+        // Connection Status - Updated for user online/offline status
         function updateConnectionStatus(isOnline) {
-            const statusElement = document.getElementById('connectionStatus');
-            if (isOnline) {
-                statusElement.className = 'connection-status online';
-                statusElement.innerHTML = '<div class="status-dot"></div><span>متصل</span>';
-            } else {
-                statusElement.className = 'connection-status offline';
-                statusElement.innerHTML = '<div class="status-dot"></div><span>غير متصل</span>';
+            // This function now handles the overall connection to JSONBin
+            console.log(isOnline ? '✅ متصل بالخادم' : '❌ غير متصل بالخادم');
+        }
+
+        // Update user online status
+        async function updateUserOnlineStatus(userId, isOnline) {
+            const userIndex = allUsers.findIndex(u => u.id === userId);
+            if (userIndex >= 0) {
+                allUsers[userIndex].isOnline = isOnline;
+                allUsers[userIndex].lastSeen = Date.now();
+                
+                // Save to JSONBin
+                await saveAllDataToJSONBin();
+                
+                // Update UI if this is the current user or in chat list
+                if (currentUser && (userId === currentUser.id || currentChatUserId)) {
+                    updateUsersList();
+                }
             }
         }
+
+        // Heartbeat system to maintain online status
+        let heartbeatInterval = null;
+        
+        function startHeartbeat() {
+            if (heartbeatInterval) clearInterval(heartbeatInterval);
+            
+            heartbeatInterval = setInterval(async () => {
+                if (currentUser) {
+                    await updateUserOnlineStatus(currentUser.id, true);
+                }
+            }, 30000); // Update every 30 seconds
+        }
+
+        function stopHeartbeat() {
+            if (heartbeatInterval) {
+                clearInterval(heartbeatInterval);
+                heartbeatInterval = null;
+            }
+        }
+
+        // Handle page visibility changes
+        document.addEventListener('visibilitychange', async () => {
+            if (currentUser) {
+                if (document.hidden) {
+                    // Page is hidden - user might be away
+                    await updateUserOnlineStatus(currentUser.id, false);
+                    stopHeartbeat();
+                } else {
+                    // Page is visible - user is back
+                    await updateUserOnlineStatus(currentUser.id, true);
+                    startHeartbeat();
+                }
+            }
+        });
+
+        // Handle page unload
+        window.addEventListener('beforeunload', async () => {
+            if (currentUser) {
+                await updateUserOnlineStatus(currentUser.id, false);
+            }
+        });
 
         // DOM Elements
         const authScreen = document.getElementById('authScreen');
@@ -1485,8 +1656,18 @@
                 const user = allUsers.find(u => u.id === lastUser.id && u.email === lastUser.email);
                 if (user) {
                     currentUser = user;
+                    
+                    // Update user online status
+                    await updateUserOnlineStatus(user.id, true);
+                    currentUser.isOnline = true;
+                    currentUser.lastSeen = Date.now();
+                    
                     showChatScreen();
                     await loadChats();
+                    
+                    // Start heartbeat to maintain online status
+                    startHeartbeat();
+                    
                     return true;
                 }
             }
@@ -1527,16 +1708,15 @@
                     saveLastUser(user);
                     
                     // Update user online status
-                    const updatedUser = { ...user, isOnline: true, lastSeen: Date.now() };
-                    const updateResult = await updateUser(updatedUser);
+                    await updateUserOnlineStatus(user.id, true);
+                    currentUser.isOnline = true;
+                    currentUser.lastSeen = Date.now();
                     
-                    if (updateResult.isOk) {
-                        currentUser = updatedUser;
-                        showChatScreen();
-                        await loadChats();
-                    } else {
-                        showError('خطأ في تحديث حالة الاتصال');
-                    }
+                    showChatScreen();
+                    await loadChats();
+                    
+                    // Start heartbeat to maintain online status
+                    startHeartbeat();
                 } else {
                     showError('البريد الإلكتروني أو كلمة المرور غير صحيحة');
                 }
@@ -1616,8 +1796,9 @@
         logoutBtn.addEventListener('click', async () => {
             if (currentUser) {
                 // Update user offline status
-                const updatedUser = { ...currentUser, isOnline: false, lastSeen: Date.now() };
-                await updateUser(updatedUser);
+                await updateUserOnlineStatus(currentUser.id, false);
+                // Stop heartbeat
+                stopHeartbeat();
             }
 
             currentUser = null;
@@ -1707,23 +1888,50 @@
                 const messages = getMessagesForChat(currentUser.id, user.id);
                 const lastMessage = messages[messages.length - 1];
                 
-                let lastMessageText = user.isOnline ? 'متصل الآن' : 'آخر ظهور ' + formatTime(user.lastSeen);
+                let lastMessageText = '';
+                let statusText = '';
                 
+                // Show online/offline status
+                if (user.isOnline) {
+                    statusText = '🟢 متصل الآن';
+                } else {
+                    const lastSeenDate = new Date(user.lastSeen);
+                    const now = new Date();
+                    const diffMinutes = Math.floor((now - lastSeenDate) / (1000 * 60));
+                    
+                    if (diffMinutes < 1) {
+                        statusText = '🟡 آخر ظهور منذ لحظات';
+                    } else if (diffMinutes < 60) {
+                        statusText = `🟡 آخر ظهور منذ ${diffMinutes} دقيقة`;
+                    } else if (diffMinutes < 1440) {
+                        const hours = Math.floor(diffMinutes / 60);
+                        statusText = `🔴 آخر ظهور منذ ${hours} ساعة`;
+                    } else {
+                        const days = Math.floor(diffMinutes / 1440);
+                        statusText = `🔴 آخر ظهور منذ ${days} يوم`;
+                    }
+                }
+                
+                // Show last message if exists
                 if (lastMessage) {
-                    if (lastMessage.file) {
+                    if (lastMessage.type === 'call') {
+                        lastMessageText = lastMessage.text;
+                    } else if (lastMessage.file) {
                         if (lastMessage.file.type === 'image') {
                             lastMessageText = '📷 صورة';
                         } else {
                             lastMessageText = `📎 ${lastMessage.file.name}`;
                         }
                     } else {
-                        lastMessageText = lastMessage.text.length > 30 ? 
-                            lastMessage.text.substring(0, 30) + '...' : 
+                        lastMessageText = lastMessage.text.length > 25 ? 
+                            lastMessage.text.substring(0, 25) + '...' : 
                             lastMessage.text;
                     }
                     
-                    // Add time
+                    // Add time to message
                     lastMessageText += ` • ${formatTime(lastMessage.timestamp)}`;
+                } else {
+                    lastMessageText = statusText;
                 }
 
                 const div = document.createElement('div');
@@ -2054,34 +2262,103 @@
             }
         });
 
-        // WebRTC Call Functions
+        // Enhanced WebRTC Call Functions
         async function initializeWebRTC() {
             try {
+                // Enhanced STUN/TURN servers configuration
                 const configuration = {
                     iceServers: [
                         { urls: 'stun:stun.l.google.com:19302' },
-                        { urls: 'stun:stun1.l.google.com:19302' }
-                    ]
+                        { urls: 'stun:stun1.l.google.com:19302' },
+                        { urls: 'stun:stun2.l.google.com:19302' },
+                        { urls: 'stun:stun3.l.google.com:19302' },
+                        { urls: 'stun:stun4.l.google.com:19302' }
+                    ],
+                    iceCandidatePoolSize: 10
                 };
                 
                 peerConnection = new RTCPeerConnection(configuration);
                 
+                // Enhanced event handlers
                 peerConnection.onicecandidate = (event) => {
                     if (event.candidate) {
-                        // In a real app, send this to the other peer
-                        console.log('ICE candidate:', event.candidate);
+                        console.log('🔗 ICE candidate generated');
+                        // In production, send this to the other peer via signaling server
                     }
                 };
                 
                 peerConnection.ontrack = (event) => {
+                    console.log('📹 Remote stream received');
                     remoteVideo.srcObject = event.streams[0];
+                    remoteStream = event.streams[0];
+                };
+
+                peerConnection.onconnectionstatechange = () => {
+                    console.log('🔄 Connection state:', peerConnection.connectionState);
+                    if (peerConnection.connectionState === 'connected') {
+                        console.log('✅ WebRTC connection established');
+                    } else if (peerConnection.connectionState === 'failed') {
+                        console.log('❌ WebRTC connection failed');
+                        showError('فشل في الاتصال');
+                    }
+                };
+
+                peerConnection.oniceconnectionstatechange = () => {
+                    console.log('🧊 ICE connection state:', peerConnection.iceConnectionState);
                 };
                 
                 return true;
             } catch (error) {
-                console.error('خطأ في تهيئة WebRTC:', error);
+                console.error('❌ خطأ في تهيئة WebRTC:', error);
                 return false;
             }
+        }
+
+        // Check WebRTC support
+        function checkWebRTCSupport() {
+            const hasWebRTC = !!(navigator.mediaDevices && 
+                               navigator.mediaDevices.getUserMedia && 
+                               window.RTCPeerConnection);
+            
+            const hasGetUserMedia = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+            
+            console.log('📱 WebRTC Support:', hasWebRTC);
+            console.log('🎥 getUserMedia Support:', hasGetUserMedia);
+            
+            return hasWebRTC && hasGetUserMedia;
+        }
+
+        // Enhanced media constraints for different devices
+        function getMediaConstraints(isVideo = false, isMobile = false) {
+            const constraints = {
+                audio: {
+                    echoCancellation: true,
+                    noiseSuppression: true,
+                    autoGainControl: true,
+                    sampleRate: 44100
+                }
+            };
+
+            if (isVideo) {
+                if (isMobile) {
+                    // Mobile-optimized video settings
+                    constraints.video = {
+                        width: { ideal: 640, max: 1280 },
+                        height: { ideal: 480, max: 720 },
+                        frameRate: { ideal: 15, max: 30 },
+                        facingMode: 'user'
+                    };
+                } else {
+                    // Desktop video settings
+                    constraints.video = {
+                        width: { ideal: 1280, max: 1920 },
+                        height: { ideal: 720, max: 1080 },
+                        frameRate: { ideal: 30, max: 60 }
+                    };
+                }
+            }
+
+            return constraints;
         }
 
         async function startCall(isVideo = false) {
@@ -2090,27 +2367,63 @@
                 return;
             }
 
+            // Check WebRTC support first
+            if (!checkWebRTCSupport()) {
+                showError('المتصفح لا يدعم المكالمات الصوتية أو المرئية');
+                return;
+            }
+
             try {
+                console.log(`🚀 بدء ${isVideo ? 'مكالمة فيديو' : 'مكالمة صوتية'}...`);
+                
                 // Initialize WebRTC
                 const webRTCReady = await initializeWebRTC();
                 if (!webRTCReady) {
-                    showError('المتصفح لا يدعم المكالمات');
+                    showError('فشل في تهيئة نظام المكالمات');
                     return;
                 }
 
-                // Get user media
-                const constraints = {
-                    audio: true,
-                    video: isVideo
-                };
+                // Detect if mobile device
+                const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                
+                // Get optimized media constraints
+                const constraints = getMediaConstraints(isVideo, isMobile);
+                
+                console.log('🎥 طلب الوصول للكاميرا والميكروفون...');
+                
+                // Request user media with enhanced error handling
+                try {
+                    localStream = await navigator.mediaDevices.getUserMedia(constraints);
+                    console.log('✅ تم الحصول على الوسائط المحلية');
+                } catch (mediaError) {
+                    console.error('❌ خطأ في الوصول للوسائط:', mediaError);
+                    
+                    // Try with basic constraints if enhanced ones fail
+                    const basicConstraints = { audio: true, video: isVideo };
+                    try {
+                        localStream = await navigator.mediaDevices.getUserMedia(basicConstraints);
+                        console.log('✅ تم الحصول على الوسائط المحلية (إعدادات أساسية)');
+                    } catch (basicError) {
+                        throw basicError;
+                    }
+                }
 
-                localStream = await navigator.mediaDevices.getUserMedia(constraints);
                 localVideo.srcObject = localStream;
 
                 // Add tracks to peer connection
                 localStream.getTracks().forEach(track => {
                     peerConnection.addTrack(track, localStream);
+                    console.log(`➕ تم إضافة مسار ${track.kind}`);
                 });
+
+                // Create offer for the call
+                try {
+                    const offer = await peerConnection.createOffer();
+                    await peerConnection.setLocalDescription(offer);
+                    console.log('📤 تم إنشاء العرض المحلي');
+                } catch (offerError) {
+                    console.error('❌ خطأ في إنشاء العرض:', offerError);
+                }
 
                 // Show incoming call notification to simulate receiving end
                 setTimeout(() => {
@@ -2120,9 +2433,36 @@
                 isInCall = true;
                 updateCallButtons(true);
 
+                // Save call info to messages (optional)
+                const callMessage = {
+                    id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+                    senderId: currentUser.id,
+                    receiverId: currentChatUserId,
+                    text: `${isVideo ? '📹 مكالمة فيديو' : '📞 مكالمة صوتية'} - ${formatTime(Date.now())}`,
+                    timestamp: Date.now(),
+                    file: null,
+                    type: 'call'
+                };
+
+                await saveMessage(callMessage);
+                renderMessage(callMessage);
+
             } catch (error) {
-                console.error('خطأ في بدء المكالمة:', error);
-                showError('فشل في الوصول للكاميرا أو الميكروفون');
+                console.error('❌ خطأ في بدء المكالمة:', error);
+                
+                // Provide specific error messages
+                if (error.name === 'NotAllowedError') {
+                    showError('يرجى السماح بالوصول للكاميرا والميكروفون');
+                } else if (error.name === 'NotFoundError') {
+                    showError('لم يتم العثور على كاميرا أو ميكروفون');
+                } else if (error.name === 'NotReadableError') {
+                    showError('الكاميرا أو الميكروفون مستخدم من تطبيق آخر');
+                } else {
+                    showError('فشل في بدء المكالمة - تأكد من إعدادات المتصفح');
+                }
+                
+                // Clean up on error
+                endCall();
             }
         }
 
@@ -2194,33 +2534,65 @@
         }
 
         function endCall() {
-            // Clean up WebRTC
+            console.log('📵 إنهاء المكالمة...');
+            
+            // Clean up WebRTC streams
             if (localStream) {
-                localStream.getTracks().forEach(track => track.stop());
+                localStream.getTracks().forEach(track => {
+                    track.stop();
+                    console.log(`⏹️ تم إيقاف مسار ${track.kind}`);
+                });
                 localStream = null;
             }
             
+            if (remoteStream) {
+                remoteStream.getTracks().forEach(track => {
+                    track.stop();
+                });
+                remoteStream = null;
+            }
+            
+            // Clean up peer connection
             if (peerConnection) {
                 peerConnection.close();
                 peerConnection = null;
+                console.log('🔌 تم إغلاق اتصال WebRTC');
             }
 
-            // Clean up UI
+            // Clean up UI elements
             localVideo.srcObject = null;
             remoteVideo.srcObject = null;
             videoCallOverlay.classList.add('hidden');
             
-            // Clear timer
+            // Reset call controls
+            document.getElementById('toggleMic').classList.remove('muted');
+            document.getElementById('toggleMic').textContent = '🎤';
+            document.getElementById('toggleCamera').classList.remove('off');
+            document.getElementById('toggleCamera').textContent = '📹';
+            document.getElementById('toggleScreen').classList.remove('active');
+            document.getElementById('toggleScreen').textContent = '🖥️';
+            
+            // Clear call timer
             if (callTimer) {
                 clearInterval(callTimer);
                 callTimer = null;
+                callStartTime = null;
             }
 
+            // Reset call duration display
+            const durationElement = document.getElementById('callDuration');
+            if (durationElement) {
+                durationElement.textContent = '00:00';
+            }
+
+            // Update call state
             isInCall = false;
             updateCallButtons(false);
             
             // Remove any call notifications
             document.querySelector('.incoming-call-notification')?.remove();
+            
+            console.log('✅ تم إنهاء المكالمة بنجاح');
         }
 
         function updateCallButtons(inCall) {
@@ -2351,5 +2723,5 @@
             }, 1000);
         });
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9995ddd0d4da2d58',t:'MTc2MjI3NzcxMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9996e680a1d9169b',t:'MTc2MjI4ODU1My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
